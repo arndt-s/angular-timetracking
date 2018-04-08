@@ -1,0 +1,12 @@
+.project-container {
+  border: 1px solid;
+  border-color: lightgray;
+  padding: 5px 0px 5px 0px;
+  border-radius: 2px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.topics-container {
+  padding-left: 10px;
+}

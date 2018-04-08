@@ -1,0 +1,15 @@
+<div class="project-add-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-inline">
+    <div class="col-sm-4">
+      <input name="title" class="form-control" formControlName="title" type="text" />
+    </div>
+    <div class="col-sm-4">
+      <input name="jira" class="form-control" formControlName="jira" type="text" />
+    </div>
+    <div class="offset-sm-3 col-sm-1">
+      <button type="submit" class="icon-button">
+        <i class="fa fa-check"></i>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,21 @@
+<div class="col-12">
+  <div class="row">
+    <div class="offset-sm-2 col-sm-2">
+        {{period.from | date}}
+    </div>
+    <div class="col-sm-2">
+      {{period.from | date:'HH:mm'}}
+    </div>
+    <div class="col-sm-2">
+      {{period.to | date:'HH:mm'}}
+    </div>
+    <div class="col-sm-2">
+      {{time}}
+    </div>
+    <div class="offset-sm-1 col-sm-1">
+        <i class="fa fa-cloud-upload text-warning" *ngIf="!period.reported && period.to"></i>
+        <i class="fa fa-cloud text-success" *ngIf="period.reported && period.to"></i>
+        <i class="fa fa-clock-o" *ngIf="!period.to"></i>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-sm-11">
+    <h4>Projects:</h4>
+  </div>
+  <div class="col-sm">
+    <i class="fa fa-plus" (click)="openAddDialog()"></i>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <b>Title</b>
+  </div>
+  <div class="col-sm-4">
+    <b>JIRA</b>
+  </div>
+  <div class="col-sm-4">
+    <b>Time</b>
+  </div>
+</div>
+<div class="row" *ngFor="let project of projects$ | async">
+  <app-project [project]="project" class="w-100"></app-project>
+</div>
+<div class="row" *ngIf="showAddProjectDialog">
+  <app-project-add class="w-100" (onCreate)="onCreate($event)"></app-project-add>
+</div>
