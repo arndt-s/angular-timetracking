@@ -18,6 +18,15 @@ export function timeTrackingReducer(lastState: TimeTrackingState, action: Action
     case TimeTrackingActions.PERIOD_END: {
       return endPeriod(lastState, action);
     }
+    case TimeTrackingActions.LOADING: {
+      return loading(lastState, action);
+    }
+    case TimeTrackingActions.LOADING_SUCCESS: {
+      return loadingSuccess(lastState, action);
+    }
+    case TimeTrackingActions.LOADING_ERROR: {
+      return loadingError(lastState, action);
+    }
     default: {
       return INITIAL_STATE;
     }
@@ -28,6 +37,8 @@ function addProject(lastState: TimeTrackingState, action: Action): TimeTrackingS
   const project = action['payload'];
   lastState.projects.push(project);
   return {
+    loading: false,
+    error: null,
     projects: lastState.projects,
     labels: lastState.labels,
     user: lastState.user
@@ -40,6 +51,8 @@ function addTopic(lastState: TimeTrackingState, action: Action): TimeTrackingSta
   const project: Project = lastState.projects.find(p => p.title === projectTitle);
   project.topics.push(topic);
   return {
+    loading: false,
+    error: null,
     projects: lastState.projects,
     labels: lastState.labels,
     user: lastState.user
@@ -54,6 +67,8 @@ function startPeriod(lastState: TimeTrackingState, action: Action): TimeTracking
   const topic: Topic = project.topics.find(t => t.title === topicTitle);
   topic.periods.push(new Period());
   return {
+    loading: false,
+    error: null,
     projects: projects,
     labels: lastState.labels,
     user: lastState.user
@@ -69,7 +84,33 @@ function endPeriod(lastState: TimeTrackingState, action: Action): TimeTrackingSt
   const period: Period = topic.periods.find(p => p.to === null);
   period.to = Date.now();
   return {
+    loading: false,
+    error: null,
     projects: projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function loading(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  return {
+    loading: true,
+    error: null,
+    projects: lastState.projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function loadingSuccess(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  return action['payload'];
+}
+
+function loadingError(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  return {
+    loading: false,
+    error: action['payload'],
+    projects: lastState.projects,
     labels: lastState.labels,
     user: lastState.user
   };

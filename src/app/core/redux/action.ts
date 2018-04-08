@@ -27,6 +27,9 @@ export class TimeTrackingActions {
   static TOPIC_ADD = 'topic.add';
   static PERIOD_START = 'period.start';
   static PERIOD_END = 'period.end';
+  static LOADING = 'loading';
+  static LOADING_SUCCESS = 'loading.success';
+  static LOADING_ERROR = 'loading.error';
 
   addProject(project: any): TimeTrackingAction {
     return {
@@ -73,4 +76,32 @@ export class TimeTrackingActions {
     };
   }
 
+  loading(): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.LOADING,
+      payload: null,
+      meta: null,
+      error: null
+    };
+  }
+
+  loadingSuccess(state: TimeTrackingState): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.LOADING_SUCCESS,
+      payload: state,
+      meta: null,
+      error: null
+    };
+  }
+
+  loadingError(error: any): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.LOADING_ERROR,
+      payload: null,
+      meta: null,
+      error: error
+    };
+  }
+
 }
+

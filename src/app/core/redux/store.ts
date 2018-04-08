@@ -2,12 +2,16 @@ import { TimeTrackingState } from './store';
 import { Project } from './../../time/model/project';
 
 export interface TimeTrackingState {
+  loading: boolean;
+  error: any;
   projects: Array<Project>;
   labels: Array<string>;
   user: string;
 }
 
 export const INITIAL_STATE: TimeTrackingState = {
+  loading: false,
+  error: null,
   projects: [{
     title: 'Routing',
     jira: 'RO-1',
