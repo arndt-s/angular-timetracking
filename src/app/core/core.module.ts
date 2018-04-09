@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { RequestOptions, Http } from '@angular/http';
 import { middleWare } from './redux/middleware';
 import { TimeTrackingActions } from './redux/action';
+import { saveStateToStorage } from './redux/persistence';
 
 @NgModule({
   imports: [
@@ -31,6 +32,11 @@ export class CoreModule {
       INITIAL_STATE,
       [middleWare],
       storeEnhancers);
+
+    ngRedux.subscribe(() => {
+      console.info('save');
+      saveStateToStorage(ngRedux.getState());
+    });
   }
 
 }
