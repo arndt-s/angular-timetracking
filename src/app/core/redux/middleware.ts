@@ -1,23 +1,20 @@
 import { TimeTrackingState } from './store';
 import { TimeTrackingAction, TimeTrackingActions } from './action';
 import { Middleware, Action } from 'redux';
-
-const localStorageKey = 'timetracking.state';
+import { getStateFromStorage } from './persistence';
 
 export const middleWare: Middleware = store => next => action => {
   let nextAction;
   if (action.type === TimeTrackingActions.LOADING) {
     nextAction = next(loadState());
   } else {
-    const state = store.getState();
-    localStorage.setItem(localStorageKey, JSON.stringify(state));
     nextAction = next(action);
   }
-  return action;
+  return nextAction;
 };
 
 function loadState(): Action {
-  const state = JSON.parse(localStorage.getItem(localStorageKey));
+  const state = getStateFromStorage();
   if (state) {
     return <TimeTrackingAction>{
       type: TimeTrackingActions.LOADING_SUCCESS,
