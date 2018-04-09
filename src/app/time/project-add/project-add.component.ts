@@ -33,7 +33,7 @@ export class ProjectAddComponent implements OnInit {
     this.onCreate.emit({
       title: this.form.value['title'],
       jira: this.form.value['jira'],
-      topics: null,
+      topics: [],
     });
   }
 
