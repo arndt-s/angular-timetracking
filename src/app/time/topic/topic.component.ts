@@ -4,6 +4,7 @@ import { Topic } from '../model/topic';
 import { SimpleChanges, OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { dispatch } from '@angular-redux/store';
 import { Project } from '../model/project';
+import { Period } from '../model/period';
 
 @Component({
   selector: 'app-topic',
@@ -49,6 +50,16 @@ export class TopicComponent implements OnInit, OnChanges {
   @dispatch()
   stopTracking() {
     return this.actions.endPeriod(this.project.title, this.topic.title);
+  }
+
+  @dispatch()
+  reportPeriod(period: Period) {
+    return this.actions.reportPeriod(this.project.title, this.topic.title, period);
+  }
+
+  @dispatch()
+  deletePeriod(period: Period) {
+    return this.actions.deletePeriod(this.project.title, this.topic.title, period);
   }
 
 }

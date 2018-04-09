@@ -1,21 +1,25 @@
 <div class="col-12">
   <div class="row">
-    <div class="offset-sm-2 col-sm-2">
-        {{period.from | date}}
+    <div class="offset-sm-3 col-sm-2 col-9 order-1">
+      {{period.from | date}}
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1 col-5 order-3">
       {{period.from | date:'HH:mm'}}
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1 col-5 order-4">
       {{period.to | date:'HH:mm'}}
     </div>
-    <div class="col-sm-2">
-      {{time}}
+    <div class="offset-sm-1 col-sm-2 d-none d-sm-block order-5">
+      <span class="period-time">
+        {{ period.from | time:'dates':period.to }}
+      </span>
     </div>
-    <div class="offset-sm-1 col-sm-1">
-        <i class="fa fa-cloud-upload text-warning" *ngIf="!period.reported && period.to"></i>
-        <i class="fa fa-cloud text-success" *ngIf="period.reported && period.to"></i>
-        <i class="fa fa-clock-o" *ngIf="!period.to"></i>
-      </div>
+    <div class="offset-sm-1 col-sm-1 col-3 order-2 order-sm-6">
+      <i class="fa fa-refresh fa-spin fa-fw" *ngIf="!period.reported && period.isReporting"></i>
+      <i class="fa fa-cloud-upload text-unreported fa-click" *ngIf="!period.reported && period.to && !period.isReporting" (click)="report()"></i>
+      <i class="fa fa-times fa-click" *ngIf="!period.reported && period.to && !period.isReporting" (click)="delete()"></i>
+      <i class="fa fa-cloud text-reported" *ngIf="period.reported &&  period.to"></i>
+      <i class="fa fa-clock-o text-danger fa-click" *ngIf="!period.to" (click)="stopTracking()"></i>
+    </div>
   </div>
 </div>

@@ -27,6 +27,10 @@ export class TimeTrackingActions {
   static TOPIC_ADD = 'topic.add';
   static PERIOD_START = 'period.start';
   static PERIOD_END = 'period.end';
+  static PERIOD_DELETE = 'period.delete';
+  static PERIOD_REPORT = 'period.report';
+  static PERIOD_REPORT_SUCCESS = 'period.report.success';
+  static PERIOD_REPORT_ERROR = 'period.report.error';
   static LOADING = 'loading';
   static LOADING_SUCCESS = 'loading.success';
   static LOADING_ERROR = 'loading.error';
@@ -70,6 +74,58 @@ export class TimeTrackingActions {
       payload: {
         project: project,
         topic: topic
+      },
+      meta: null,
+      error: null
+    };
+  }
+
+  reportPeriod(project: string, topic: string, period: Period): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.PERIOD_REPORT,
+      payload: {
+        project: project,
+        topic: topic,
+        period: period
+      },
+      meta: null,
+      error: null
+    };
+  }
+
+  reportPeriodSuccess(project: string, topic: string, period: Period): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.PERIOD_REPORT_SUCCESS,
+      payload: {
+        project: project,
+        topic: topic,
+        period: period
+      },
+      meta: null,
+      error: null
+    };
+  }
+
+  reportPeriodError(project: string, topic: string, period: Period, error: any): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.PERIOD_REPORT_ERROR,
+      payload: {
+        project: project,
+        topic: topic,
+        period: period
+      },
+      meta: null,
+      error: error
+    };
+  }
+
+  deletePeriod(project: string, topic: string, period: Period): TimeTrackingAction {
+    return {
+      type: TimeTrackingActions.PERIOD_DELETE,
+      payload: {
+        project: project,
+        topic: topic,
+        period: period
       },
       meta: null,
       error: null

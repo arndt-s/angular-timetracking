@@ -4,3 +4,7 @@
   padding: 0px;
   border: none;
 }
+
+.fa-click {
+  cursor: pointer;
+}

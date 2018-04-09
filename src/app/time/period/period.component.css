@@ -1,0 +1,15 @@
+.text-reported {
+  color: lightgray;
+}
+
+.text-unreported {
+  color: #ffe493
+}
+
+.period-time {
+  padding-left: 20px;
+}
+
+.time-hover {
+  border: 1px solid;
+}

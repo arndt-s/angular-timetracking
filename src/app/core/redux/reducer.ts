@@ -4,6 +4,7 @@ import { TimeTrackingActions } from './action';
 import { Action } from 'redux';
 import { Project } from '../../time/model/project';
 import { Period } from '../../time/model/period';
+import { access } from 'fs';
 
 export function timeTrackingReducer(lastState: TimeTrackingState, action: Action): TimeTrackingState {
   switch (action.type) {
@@ -18,6 +19,18 @@ export function timeTrackingReducer(lastState: TimeTrackingState, action: Action
     case TimeTrackingActions.PERIOD_END: {
       return endPeriod(lastState, action);
     }
+    case TimeTrackingActions.PERIOD_DELETE: {
+      return deletePeriod(lastState, action);
+    }
+    case TimeTrackingActions.PERIOD_REPORT: {
+      return reportPeriod(lastState, action);
+    }
+    case TimeTrackingActions.PERIOD_REPORT_SUCCESS: {
+      return reportPeriodSuccess(lastState, action);
+    }
+    case TimeTrackingActions.PERIOD_REPORT_ERROR: {
+      return reportPeriodError(lastState, action);
+    }
     case TimeTrackingActions.LOADING: {
       return loading(lastState, action);
     }
@@ -28,7 +41,7 @@ export function timeTrackingReducer(lastState: TimeTrackingState, action: Action
       return loadingError(lastState, action);
     }
     default: {
-      return INITIAL_STATE;
+      return lastState;
     }
   }
 }
@@ -86,6 +99,74 @@ function endPeriod(lastState: TimeTrackingState, action: Action): TimeTrackingSt
   return {
     loading: false,
     error: null,
+    projects: projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function reportPeriod(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  const projectTitle = action['payload']['project'];
+  const topicTitle = action['payload']['topic'];
+  const period = action['payload']['period'];
+
+  const projects = lastState.projects.map(x => Object.assign({}, x));
+  const project: Project = projects.find(p => p.title === projectTitle);
+  const topic: Topic = project.topics.find(t => t.title === topicTitle);
+  topic.periods.find(p => p.from === period.from).isReporting = true;
+
+  return {
+    loading: false,
+    error: lastState.error,
+    projects: projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function reportPeriodSuccess(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  const projectTitle = action['payload']['project'];
+  const topicTitle = action['payload']['topic'];
+  const period = action['payload']['period'];
+
+  period.isReporting = false;
+  period.reported = true;
+  return {
+    loading: false,
+    error: lastState.error,
+    projects: lastState.projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function reportPeriodError(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  const projectTitle = action['payload']['project'];
+  const topicTitle = action['payload']['topic'];
+  const period = action['payload']['period'];
+  period.isReporting = false;
+  return {
+    loading: false,
+    error: action['error'],
+    projects: lastState.projects,
+    labels: lastState.labels,
+    user: lastState.user
+  };
+}
+
+function deletePeriod(lastState: TimeTrackingState, action: Action): TimeTrackingState {
+  const projectTitle = action['payload']['project'];
+  const topicTitle = action['payload']['topic'];
+  const period = action['payload']['period'];
+
+  const projects = lastState.projects.map(x => Object.assign({}, x));
+  const project: Project = projects.find(p => p.title === projectTitle);
+  const topic: Topic = project.topics.find(t => t.title === topicTitle);
+  topic.periods = topic.periods.filter(p => p.from !== period.from);
+
+  return {
+    loading: false,
+    error: lastState.error,
     projects: projects,
     labels: lastState.labels,
     user: lastState.user

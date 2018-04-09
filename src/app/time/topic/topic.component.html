@@ -1,22 +1,24 @@
 <div class="col-12">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 col-9">
       <span class="topic-title">
         {{topic.title}}
       </span>
     </div>
-    <div class="col-sm-4">
+    <div class="col-4 d-none d-sm-block">
       {{topic.jira}}
     </div>
-    <div class="col-sm-2">
-      {{totalTime}}
+    <div class="col-2 d-none d-sm-block">
+      <span class="topic-time">
+        {{totalTime | time:'milli'}}
+      </span>
     </div>
-    <div class="offset-sm-1 col-sm-1">
-        <i class="fa fa-play" *ngIf="!isTracking" (click)="startTracking()"></i>
-      <i class="fa fa-clock-o" *ngIf="isTracking" (click)="stopTracking()"></i>
+    <div class="offset-sm-1 col-sm-1 col-3">
+      <i class="fa fa-play" *ngIf="!isTracking" (click)="startTracking()"></i>
+      <i class="fa fa-clock-o text-danger fa-click" *ngIf="isTracking" (click)="stopTracking()"></i>
     </div>
   </div>
   <div class="row" *ngFor="let period of topic.periods">
-    <app-period [period]="period" class="w-100"></app-period>
+    <app-period [period]="period" class="w-100" (onStop)="stopTracking()" (onDelete)="deletePeriod($event)" (onReport)="reportPeriod($event)"></app-period>
   </div>
 </div>

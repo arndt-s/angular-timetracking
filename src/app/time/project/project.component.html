@@ -1,14 +1,17 @@
 <div class="project-container">
-  <div class="col-12">
+  <div class="col">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-4">
         {{project.title}}
       </div>
-      <div class="col-sm-4">
+      <div class="col-4 d-none d-sm-block">
         {{project.jira}}
       </div>
-      <div class="offset-sm-3 col-sm-1">
-        <i class="fa fa-plus" (click)="openCreateDialog()"></i>
+      <div class="col-3 d-none d-sm-block">
+        {{totalTime | time:'milli'}}
+      </div>
+      <div class="col-sm-1 d-none d-sm-block">
+        <i class="fa fa-plus fa-click" (click)="openCreateDialog()"></i>
       </div>
     </div>
     <div class="row" *ngFor="let topic of project.topics">

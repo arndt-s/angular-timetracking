@@ -10,13 +10,15 @@ import { ProjectComponent } from './project/project.component';
 import { TopicComponent } from './topic/topic.component';
 import { PeriodComponent } from './period/period.component';
 import { TopicAddComponent } from './topic-add/topic-add.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     ReactiveFormsModule,
     CommonModule,
     TimeRoutingModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   declarations: [
     TimeTrackingComponent,

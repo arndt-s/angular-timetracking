@@ -21,18 +21,21 @@ export const INITIAL_STATE: TimeTrackingState = {
       periods: [
         {
           to: Date.now(),
-          from: Date.now() - 50000,
-          reported: true
+          from: Date.now() - 5000000,
+          reported: true,
+          isReporting: false
         },
         {
           to: Date.now(),
-          from: Date.now() - 12000,
-          reported: false
+          from: Date.now() - 1200000,
+          reported: false,
+          isReporting: false
         },
         {
           to: null,
           from: Date.now() - 12000,
-          reported: false
+          reported: false,
+          isReporting: false
         }
       ]
     }

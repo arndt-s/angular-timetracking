@@ -1,3 +1,4 @@
+import { JiraApi } from './jira/jira.api';
 import { TimeTrackingState, INITIAL_STATE } from './redux/store';
 import { timeTrackingReducer } from './redux/reducer';
 import { NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
@@ -13,7 +14,8 @@ import { saveStateToStorage } from './redux/persistence';
     NgReduxModule
   ],
   providers: [
-    TimeTrackingActions
+    TimeTrackingActions,
+    JiraApi
   ]
 })
 export class CoreModule {
@@ -24,9 +26,6 @@ export class CoreModule {
       [ devTools.enhancer() ] :
       [];
 
-    // Tell @angular-redux/store about our rootReducer and our initial state.
-    // It will use this to create a redux store for us and wire up all the
-    // events.
     ngRedux.configureStore(
       timeTrackingReducer,
       INITIAL_STATE,
@@ -34,7 +33,6 @@ export class CoreModule {
       storeEnhancers);
 
     ngRedux.subscribe(() => {
-      console.info('save');
       saveStateToStorage(ngRedux.getState());
     });
   }
